@@ -9,8 +9,8 @@ class PostsController < ApplicationController
   end
 
   def show
-  	@post = Post.find(params[:id])
-    @post = Post.find_by(id: params[:id])
+
+
     # 変数@likes_countを定義
     #モデルにリレーションを作ることでLikes.findなどとアクセスしなくても
     #以下の形でpostに紐づくlikeのレコードを取得することができる。
@@ -25,7 +25,7 @@ class PostsController < ApplicationController
     #自分がいいね！したレコードがあるかどうかのチェック。
     #current_user&.idの&(アンパサンド)がないとcurrent_userがnilのときにエラーがおきる。
     @my_like = @likes.find_by_user_id(current_user&.id)
-		@my_vote = Vote.find_by(user_id:current_user.id)
+		# @my_votes = Vote.where(user_id:current_user.id, comment_id:@post.comments.ids)
   end
 
   def new
@@ -64,7 +64,7 @@ class PostsController < ApplicationController
 
   private
   def post_params
-  	params.require(:post).permit(:title, :description, :image)
+  	params.require(:post).permit(:id, :title, :description, :image)
   end
 
   def find_post
