@@ -1,0 +1,32 @@
+<!-- この_comment.html.erbは_formに記述した内容がpostsのshowページに表示される。 -->
+<div class="comments_box">
+	<p><%= comment.content %></p><br>
+	<p class="message-posted-by">Posted by <%= comment.user.email %> <%= time_ago_in_words(comment.created_at) %> ago</p>
+
+
+	<div class="like_button posts-show-item">
+	 <!-- if文を用いて、表示内容を切り替え -->
+			<%if @my_vote.present? %>
+			
+			<!-- @post.idを@comment.idに下がエラーになった。9月17日　-->
+	       <%= link_to("/votes/#{@post.id}/destroy",{method: "post"})do %>
+	        <span class="fa fa-thumbs-o-up vote-btn-donwvote"></span>
+	       <% end %>
+      <% else %>
+	      <%= link_to("/votes/#{@post.id}/create", {method: "post"}) do %>
+	        <span class="fa fa-thumbs-o-up vote-btn"></span>
+	      <% end %>
+      <% end %>
+      <!-- <%= @likes.count  %>を追加したい。　-->
+  
+	</div>
+
+
+	<% if user_signed_in? %>
+		<% if comment.user_id == current_user.id %>
+		<%= link_to "Delete", post_comment_path(comment.post, comment), method: :delete, data:{confirm: "Are you sure?"} %>
+		<% end %> 
+	<% end %> 
+
+
+</div>
