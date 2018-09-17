@@ -25,6 +25,7 @@ class PostsController < ApplicationController
     #自分がいいね！したレコードがあるかどうかのチェック。
     #current_user&.idの&(アンパサンド)がないとcurrent_userがnilのときにエラーがおきる。
     @my_like = @likes.find_by_user_id(current_user&.id)
+		@my_vote = Vote.find_by(user_id:current_user.id)
   end
 
   def new
@@ -43,7 +44,7 @@ class PostsController < ApplicationController
   end
 
   def edit
-  	
+
   end
 
   def update
@@ -62,7 +63,7 @@ class PostsController < ApplicationController
 
 
   private
-  def post_params													
+  def post_params
   	params.require(:post).permit(:title, :description, :image)
   end
 
