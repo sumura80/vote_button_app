@@ -1,3 +1,3 @@
 class Vote < ApplicationRecord
-	has_one :comment
+	belongs_to :comment
 end
